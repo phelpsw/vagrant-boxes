@@ -76,7 +76,8 @@ Vagrant.configure("2") do |config|
      apt-get install -y zsh zsh-common
      chsh -s $(which zsh) vagrant
 
-     apt-get install -y libnss3-tools
+     apt-get install -y libnss3-tools libbz2-dev libreadline-dev libssl-dev \
+        zlib1g-dev
    SHELL
 
    $user_script = <<-USERSCRIPT
@@ -110,6 +111,8 @@ Vagrant.configure("2") do |config|
      curl -q -sL 'https://go.netflix.com/newt-install' | bash
      echo 'eval "$(newt --completion-script-zsh)"' >> .zshrc
      curl -sL https://go.netflix.com/metatron-install | bash -s -- --no-refresh
+     echo "METATRON_USER=phelps metatron refresh"
+     echo "Also, perform ssh-keygen and upload pubkey to stash!"
    USERSCRIPT
    config.vm.provision "shell", inline: $user_script, privileged: false
 
